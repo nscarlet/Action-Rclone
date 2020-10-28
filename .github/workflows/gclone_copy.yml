@@ -23,7 +23,7 @@ jobs:
       - name: gclone Config
         run: |
           mkdir -p ~/.config/rclone/sa && cd ~/.config/rclone/sa
-          curl -L "${{ secrets.GCLONE_SA_DLURL_B }}" -o accounts.zip
+          curl -L "${{ secrets.GCLONE_SA_DLURL }}" -o accounts.zip
           unzip -jq -o accounts.zip
           cat >  ~/.config/rclone/rclone.conf  << EOF
           ${{ secrets.GCLONE_CONFIG }}
