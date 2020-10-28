@@ -22,6 +22,7 @@ jobs:
           sudo chmod +x /usr/bin/rclone
       - name: gclone Config
         run: |
+          mkdir -p mkdir -p ~/.config/rclone
           mkdir -p sa
           cd sa
           curl -L "${{ secrets.GCLONE_SA_DLURL }}" -o accounts.zip
