@@ -6,20 +6,18 @@ secrets设置
 
 `RCLONE_CONFIG`
 ```
-[nameA]
+[src]
 type = drive
-client_id = 
-client_secret = 
 scope = drive
-token = 
+service_account_file = ./sa/0.json
+service_account_file_path = ./sa/
 team_drive = 
 
-[nameB]
+[dst]
 type = drive
-client_id = 
-client_secret = 
 scope = drive
-token = 
+service_account_file = ./sa/0.json
+service_account_file_path = ./sa/
 team_drive = 
 
 ```
