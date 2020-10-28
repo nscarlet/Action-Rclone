@@ -1,0 +1,36 @@
+name: gclone copy
+
+on:
+#  schedule:
+#    - cron: 0 */6 * * *
+  workflow_dispatch:
+    inputs:
+    
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    name: GD sync by gclone
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: gclone Install
+        run: |
+          wget -qO- https://api.github.com/repos/donwa/gclone/releases/latest \
+          | grep browser_download_url | grep Linux_x86_64 | cut -d '"' -f 4 \
+          | wget --no-verbose -i- -O- | gzip -d -c > rclone
+          sudo mv rclone /usr/bin
+          sudo chmod +x /usr/bin/rclone
+      - name: gclone Config
+        run: |
+          mkdir -p ~/.config/rclone/sa && cd ~/.config/rclone/sa
+          curl -L "${{ secrets.GCLONE_SA_DLURL_B }}" -o accounts.zip
+          unzip -jq -o accounts.zip
+          cat >  ~/.config/rclone/rclone.conf  << EOF
+          ${{ secrets.GCLONE_CONFIG }}
+          EOF
+      - name: gclone Run
+        run: |
+          echo "::add-mask::gclone sa file: /home/runner/.config/rclone/sa/"
+          echo "::add-mask::.json"
+          rclone copy ${{ secrets.GCLONE_PATH}} ${{ secrets.FLAGS }}
+          echo "同步完成"
