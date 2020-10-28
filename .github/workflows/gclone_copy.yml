@@ -22,11 +22,11 @@ jobs:
           sudo chmod +x /usr/bin/rclone
       - name: gclone Config
         run: |
-          mkdir -p ~/.config/rclone/sa && cd ~/.config/rclone/sa
-          chmod +rwx ~/.config/rclone/sa
+          mkdir -p sa
+          cd sa
           curl -L "${{ secrets.GCLONE_SA_DLURL }}" -o accounts.zip
           unzip -jq -o accounts.zip
-          chmod +rwx ~/.config/rclone/sa/0.json
+          cd ..
           cat >  ~/.config/rclone/rclone.conf  << EOF
           ${{ secrets.GCLONE_CONFIG }}
           EOF
