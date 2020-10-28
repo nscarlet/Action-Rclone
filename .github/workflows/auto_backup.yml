@@ -4,8 +4,8 @@ on:
 #  push:
 #    branches:
 #      - master
-  schedule:
-    - cron: 0 22 * * *
+#  schedule: uncomment later
+#    - cron: 0 22 * * *
   workflow_dispatch:
     inputs:
     
