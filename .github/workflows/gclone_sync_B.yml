@@ -1,8 +1,8 @@
 name: gclone sync B
 
 on:
-#  schedule:
-#    - cron: 0 */6 * * *
+  schedule:
+    - cron: 30 8 * * 0
   workflow_dispatch:
     inputs:
     
@@ -32,5 +32,10 @@ jobs:
         run: |
           echo "::add-mask::gclone sa file: /home/runner/.config/rclone/sa/"
           echo "::add-mask::.json"
-          rclone sync ${{ secrets.GCLONE_PATCH_B }}
-          echo "同步完成"
+          rclone sync ${{ secrets.GCLONE_PATCH_B }} --drive-server-side-across-configs
+          if[[ `rclone size main:/` -eq `rclone size backup:/` ]] then
+            echo "Complete"
+          else
+            echo "Incomplete"
+          fi
+          echo "Finished"
